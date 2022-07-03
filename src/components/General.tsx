@@ -37,9 +37,9 @@ export default function General(props: any) {
 
 
     const labelCanMove =()=>{
-        setOverlayArray([[1,2],[2,4],[3,6]])
+   
     }   
-
+    
     return (
         <img onClick={labelCanMove} src={color === "red" ? redShuai : blackJiang} alt="将" />
     )
