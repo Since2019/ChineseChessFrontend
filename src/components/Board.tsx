@@ -3,13 +3,15 @@ import BoardSquare from "./BoardSquare"   // 存放棋子的Square
 import styled from 'styled-components'
 import chess_board from "../assets/antontw_chinese_chess_plate.svg"
 
-import ChessPiece from "./ChessPiece"
 import Knight from './Knight'
 import General from './General'
 
+
+
+
 import { useBoardContext } from '../contexts/BoardContext'
 
-const Div = styled.div`
+const Square = styled.div`
   width: "100%";
   height: "100%";
   display: "flex";
@@ -22,23 +24,12 @@ const Div = styled.div`
 
 
 
-// TODO 用于判断 使用什么来渲染的
+// NOTE 用于判断 使用什么来渲染的
 const chessPieceElementMap = new Map<string, any>([
   ["Knight", Knight],
   ["General", General]
 ]
 );
-
-// const chessPieceElementMap = new Map<string, typeof ChessPiece>([
-//   ["Knight", Knight],
-//   ["General", General]
-// ]
-// );
-
-
-
-
-
 
 export default function Board({ className, children }: any) {
 
@@ -50,36 +41,40 @@ export default function Board({ className, children }: any) {
   } = useBoardContext();
 
 
-
+  // NOTE 这个function用于根据context里传入的overlayArray进行渲染
   const renderOverlay = (x: number, y: number) => {
     return overlayArray.map((square: any, index: number) => {
-      return ((square.x === x && square.y === y) ? <div style={{ background: "red" }}></div> : null)
+      console.log("overlay",square.x,square.y);
+      return ((square.x === x && square.y === y) ? <div style={{ backgroundColor: "red", opacity: "0.5", width: "80%",height: "80%", position: "absolute",top: 0,left: 0, zIndex: 10 }}></div> : null)
     })
   }
 
 
-
+  // NOTE 渲染 Grid
   const renderSqure = (i: number) => {
     const x = i % 9;   // 横坐标共9个点
-    const y = Math.floor(i / 10) // 纵坐标10个点
+    const y = Math.floor(i / (10-1) ) // 纵坐标10个点
     return (
       <BoardSquare x={x} y={y} className={className} key={i}>
         {renderPiece(x, y)}
         {renderOverlay(x, y)}
+        {/* x{x},y{y} */}
       </BoardSquare>
     )
   }
 
 
-  // TODO: 如何才能让Board知道什么棋子在什么位置?
+  // NOTE: 如何才能让Board知道什么棋子在什么位置?
   const renderPiece = (x: number, y: number) => {
     // console.log(x);
     // console.log(y);
     return chessPieceArray.map((piece: any, index: number) => {
-
-      console.log("chessPieceArray");
-      if (piece.x === x && piece.y === y)
-        console.log("渲染棋子：", piece.name);
+      
+      // if (piece.x === x && piece.y === y) {
+      //   console.log("渲染棋子：", piece.name);
+      //   console.log("piece",piece);
+      //   console.log("chessPieceArray",chessPieceArray);
+      // }
 
       const ChessElem: any = chessPieceElementMap.get(piece.name); //HACK 动态渲染Elem: https://stackoverflow.com/questions/29875869/react-jsx-dynamic-component-name
 
@@ -92,13 +87,13 @@ export default function Board({ className, children }: any) {
     )
   };
 
-  // 发送90个格子
+  // NOTE 发送90个格子, 用 renderSquare 的 function 来赋予坐标
   const squares = Array.from(new Array(90), (element, index) =>
     renderSqure(index)
   );
 
   return (
-    <Div
+    <Square
       style={{
         width: "100%",
         height: "100%",
@@ -109,6 +104,8 @@ export default function Board({ className, children }: any) {
       }}
     >
       {squares}
-    </Div>
+      
+    </Square>
   )
+
 }
