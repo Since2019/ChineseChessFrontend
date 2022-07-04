@@ -44,7 +44,7 @@ export default function Board({ className, children }: any) {
   // NOTE 这个function用于根据context里传入的overlayArray进行渲染
   const renderOverlay = (x: number, y: number) => {
     return overlayArray.map((square: any, index: number) => {
-      console.log("overlay",square.x,square.y);
+      // console.log("overlay",square.x,square.y);
       return ((square.x === x && square.y === y) ? <div style={{ backgroundColor: "red", opacity: "0.5", width: "80%",height: "80%", position: "absolute",top: 0,left: 0, zIndex: 10 }}></div> : null)
     })
   }
