@@ -38,12 +38,12 @@ export default function BoardSquare({ className, children, x, y }: any) {
     )
     );
 
-    console.log("newChessPieceArray", newNewChessPieceArray);
+    // console.log("newChessPieceArray", newNewChessPieceArray);
     setChessPieceArray(newNewChessPieceArray);
   }
 
   useEffect(() => {
-    console.log("currentPlayer is:", currentPlayer);
+    // console.log("currentPlayer is:", currentPlayer);
   }, [currentPlayer])
 
   const [{ isOver, canDrop }, drop] = useDrop(
@@ -98,9 +98,9 @@ export default function BoardSquare({ className, children, x, y }: any) {
           // console.log(" item of chessPieceArray",item);
           // console.log(" selectedPiece",selectedPiece);
           if (item.x === selectedPiece.x && item.y === selectedPiece.y) {
-            console.log("item===selectedPiece", item, selectedPiece)
-            console.log("index of selectedPiece", newChessPieceArray.indexOf(item));
-            console.log(newChessPieceArray);
+            // console.log("item===selectedPiece", item, selectedPiece)
+            // console.log("index of selectedPiece", newChessPieceArray.indexOf(item));
+            // console.log(newChessPieceArray);
 
 
             //NOTE selectedPiece 的坐标得到了更改
@@ -111,7 +111,7 @@ export default function BoardSquare({ className, children, x, y }: any) {
         }
         setChessPieceArray(newChessPieceArray);
 
-        console.log("newChessPieceArray", newChessPieceArray);
+        // console.log("newChessPieceArray", newChessPieceArray);
 
         // NOTE 这里是Take Turns的代码,转换为另一方下
         setCurrentPlayer(currentPlayer === 'red' ? 'black' : 'red');

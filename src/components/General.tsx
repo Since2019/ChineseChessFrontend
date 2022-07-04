@@ -144,8 +144,7 @@ export default function General(props: any) {
             }
         }
         else {
-            console.log("Stopped Dragging" + name);
-            setOverlayArray([])
+             setOverlayArray([])
         }
 
     }, [isDragging])

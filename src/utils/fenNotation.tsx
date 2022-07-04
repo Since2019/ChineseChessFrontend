@@ -17,9 +17,9 @@ export function chessPieceArray2FenString(chessPieceArray: Array<any>): string {
         return 0;
     })
 
-    console.log("sorted chessPiece Array");
+    // console.log("sorted chessPiece Array");
 
-    console.log(newChessPieceArray);
+    // console.log(newChessPieceArray);
 
     let fen_string = [];
 

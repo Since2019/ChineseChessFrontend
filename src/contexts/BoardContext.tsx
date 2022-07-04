@@ -108,8 +108,6 @@ export function BoardContextProvider({ children }: any) {
     // 判断是否有 piece 在这个点上
     const hasPiece = (x: number, y: number): boolean | object => {
 
-        console.log("in hasPiece()");
-
         for (const item of chessPieceArray) {
             if (item.x === x && item.y === y) {
                 return item;
@@ -126,12 +124,9 @@ export function BoardContextProvider({ children }: any) {
         console.log("in hasFriendlyPiece()");
 
         for (const item of chessPieceArray) {
-            console.log("x,y,color");
-            console.log(x, y, color);
+ 
             if (item.x === x && item.y === y) {
-                console.log("color, item.color");
-                console.log(item.color);
-                console.log(color);
+ 
                 if (item.color === color) {
                     return true;
                 }
@@ -139,13 +134,10 @@ export function BoardContextProvider({ children }: any) {
         }
         return false;
     }
+ 
 
     useEffect(() => {
-        console.log("selectedPiece", selectedPiece);
-    }, [selectedPiece])
-
-    useEffect(() => {
-        console.log("chessPieceArray", chessPieceArray);
+        // console.log("chessPieceArray", chessPieceArray);
         chessPieceArray2FenString(chessPieceArray);
     }, [chessPieceArray])
 

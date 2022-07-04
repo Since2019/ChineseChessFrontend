@@ -110,7 +110,7 @@ export default function Knight(props: any) {
             }
         }
         else {
-            console.log("Stopped Dragging" + name);
+            // console.log("Stopped Dragging" + name);
             setOverlayArray([])
         }
 
