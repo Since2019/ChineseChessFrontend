@@ -28,6 +28,10 @@ export const BoardContext = createContext({
     // Standlone Helper Functions
     hasPiece: (x: number, y: number): boolean | object => {
         return false;
+    },
+
+    hasFriendlyPiece: (x: number, y: number, color: string): boolean => {
+        return false
     }
 
 
@@ -51,18 +55,27 @@ export function BoardContextProvider({ children }: any) {
 
 
     const [chessPieceArray, setChessPieceArray] = useState([
-        {
-            name: "Knight",
-            color: "black",
-            x: 1,
-            y: 0
-        },
+
+
         {
             name: "General",
             color: "black",
             x: 4,
             y: 0
         },
+        {
+            name: "General",
+            color: "red",
+            x: 4,
+            y: 9
+        },
+        {
+            name: "Knight",
+            color: "black",
+            x: 1,
+            y: 0
+        },
+
         {
             name: "Knight",
             color: "black",
@@ -105,6 +118,28 @@ export function BoardContextProvider({ children }: any) {
         return false;
     }
 
+
+
+    // 判断该点上面是否为己方棋子
+    const hasFriendlyPiece = (x: number, y: number, color: string): boolean => {
+
+        console.log("in hasFriendlyPiece()");
+
+        for (const item of chessPieceArray) {
+            console.log("x,y,color");
+            console.log(x, y, color);
+            if (item.x === x && item.y === y) {
+                console.log("color, item.color");
+                console.log(item.color);
+                console.log(color);
+                if (item.color === color) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     useEffect(() => {
         console.log("selectedPiece", selectedPiece);
     }, [selectedPiece])
@@ -115,9 +150,10 @@ export function BoardContextProvider({ children }: any) {
         chessPieceArray, setChessPieceArray,
         overlayArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        currentPlayer,setCurrentPlayer,
+        currentPlayer, setCurrentPlayer,
         // function
-        hasPiece
+        hasPiece,
+        hasFriendlyPiece
     };
 
     return (
