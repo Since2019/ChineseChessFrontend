@@ -64,9 +64,9 @@ export default function BoardSquare({ className, children, x, y }: any) {
         }
 
         for (let itm of overlayArray) {
-          console.log("itm", itm);
-          console.log("itm.x", itm.x);
-          console.log("itm.y", itm.y);
+          // console.log("itm", itm);
+          // console.log("itm.x", itm.x);
+          // console.log("itm.y", itm.y);
 
           if (itm.x === x && itm.y === y) {
             return true;
