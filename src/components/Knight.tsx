@@ -57,7 +57,7 @@ export default function Knight(props: any) {
     useEffect(() => {
 
         if (isDragging) {
-            console.log("Dragging" + name);
+            // console.log("Dragging: " + name);
 
             for (let i = 0; i < 90; i++) {
                 const x = i % 9;   // 横坐标共9个点
