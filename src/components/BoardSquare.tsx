@@ -48,7 +48,7 @@ export default function BoardSquare({ className, children, x, y }: any) {
 
   const [{ isOver, canDrop }, drop] = useDrop(
     {
-      accept: ItemTypes.KNIGHT,
+      accept: [ItemTypes.KNIGHT, ItemTypes.GENERAL],
       canDrop: (item: any, monitor: any): any => { // item 是 useDrag 里面的 item 
 
 
@@ -60,7 +60,7 @@ export default function BoardSquare({ className, children, x, y }: any) {
 
         // TODO: comment out to let piece move without keeping track of taking turns.
         if (currentPlayer !== item.color) {
-            return false;              
+          return false;
         }
 
         for (let itm of overlayArray) {
@@ -69,33 +69,51 @@ export default function BoardSquare({ className, children, x, y }: any) {
           console.log("itm.y", itm.y);
 
           if (itm.x === x && itm.y === y) {
-            return true; 
+            return true;
           }
 
         }
-        console.log("before false")
 
         return false;     // TODO: Change to 'true' to allow moving every where                        
       },
       // React-DND's drop listener
-      drop: (e, s) => {
+      drop: () => {
 
         let newChessPieceArray = [...chessPieceArray]
-        for (let item of chessPieceArray) {
+
+
+        for (let item of newChessPieceArray) {
+          // NOTE 先将原先这个位置上的棋子除掉 
+          if (item.x === x && item.y === y) {
+            newChessPieceArray.splice(newChessPieceArray.indexOf(item), 1);
+            // newChessPieceArray = chessPieceArray.filter((item: any) => (
+            //   item.x !== x && item.y !== y
+            // ));
+          }
+        }
+
+
+
+        for (let item of newChessPieceArray) {
           // console.log(" item of chessPieceArray",item);
           // console.log(" selectedPiece",selectedPiece);
-
-          // 
           if (item.x === selectedPiece.x && item.y === selectedPiece.y) {
             console.log("item===selectedPiece", item, selectedPiece)
-            console.log("index of selectedPiece", chessPieceArray.indexOf(item));
-            newChessPieceArray[chessPieceArray.indexOf(item)].x = x;
-            newChessPieceArray[chessPieceArray.indexOf(item)].y = y;
+            console.log("index of selectedPiece", newChessPieceArray.indexOf(item));
+            console.log(newChessPieceArray);
+
+
+            //NOTE selectedPiece 的坐标得到了更改
+            newChessPieceArray[newChessPieceArray.indexOf(item)].x = x;
+            newChessPieceArray[newChessPieceArray.indexOf(item)].y = y;
+            break;
           }
         }
         setChessPieceArray(newChessPieceArray);
 
-        // NOTE 这里是Take Turns的代码
+        console.log("newChessPieceArray", newChessPieceArray);
+
+        // NOTE 这里是Take Turns的代码,转换为另一方下
         setCurrentPlayer(currentPlayer === 'red' ? 'black' : 'red');
 
 
