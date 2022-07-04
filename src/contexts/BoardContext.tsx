@@ -1,6 +1,6 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
-
+import {chessPieceArray2FenString} from "../utils/fenNotation"
 
 export const BoardContext = createContext({
 
@@ -143,6 +143,11 @@ export function BoardContextProvider({ children }: any) {
     useEffect(() => {
         console.log("selectedPiece", selectedPiece);
     }, [selectedPiece])
+
+    useEffect(() => {
+        console.log("chessPieceArray", chessPieceArray);
+        chessPieceArray2FenString(chessPieceArray);
+    }, [chessPieceArray])
 
 
     const value: any = {
