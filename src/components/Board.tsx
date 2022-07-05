@@ -6,10 +6,13 @@ import chess_board from "../assets/antontw_chinese_chess_plate.svg"
 import Knight from './Knight'
 import General from './General'
 
+import { io, Socket } from "socket.io-client";
 
 
 
 import { useBoardContext } from '../contexts/BoardContext'
+import { useParams } from 'react-router-dom';
+
 
 const Square = styled.div`
   width: "100%";
@@ -31,8 +34,55 @@ const chessPieceElementMap = new Map<string, any>([
 ]
 );
 
+
+var CHATBOX_SERVER: string = process.env.REACT_APP_CHATBOX_SERVER as string;
+
+
+// ========= SOCKET =============================================
+if (!process.env.REACT_APP_CHATBOX_SERVER) {
+  CHATBOX_SERVER = "localhost:4000/"
+}
+
+const socketIoClient = io(CHATBOX_SERVER, { autoConnect: false });
+// ^^^^^^^^^ SOCKET ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+// NOTE AI 模式，服务端无需帮socket用to()注册到某个room
+const loadAiSocket = () => {
+  console.log("loading AI Socket");
+  // NOTE 传送了 type 和 id 到服务器
+  socketIoClient.auth = { type: "ai", id: Date.now() }
+  socketIoClient.connect();
+  console.log(socketIoClient.auth)
+}
+
+// NOTE PVP 模式，服务端要帮socket用to()注册到某个room
+const loadPvpSocket = (tableId: string, playerId: string) => {
+  console.log("loading PvP Socket");
+  socketIoClient.auth = { tableId, playerId };
+  socketIoClient.connect();
+}
+
 export default function Board({ className, children }: any) {
 
+  const params = useParams();
+
+  // NOTE 判断是PvP还是PvE
+  useEffect(() => {
+    console.log("params", params);
+    console.log(params.mode);
+    if (params.mode)
+      if (params.mode.toLowerCase() === "ai") {
+        loadAiSocket();
+      }
+      else if (params.mode.toLowerCase() === "pvp") {
+
+        if (params.tableId && params.playerId) {
+          loadPvpSocket(params.tableId, params.playerId);
+        }
+
+      }
+
+  }, [])
 
   // TODO: 数据Array, 用context来keep track. 走子之后update
   const {
@@ -45,7 +95,7 @@ export default function Board({ className, children }: any) {
   const renderOverlay = (x: number, y: number) => {
     return overlayArray.map((square: any, index: number) => {
       // console.log("overlay",square.x,square.y);
-      return ((square.x === x && square.y === y) ? <div style={{ backgroundColor: "red", opacity: "0.5", width: "80%",height: "80%", position: "absolute",top: 0,left: 0, zIndex: 10 }}></div> : null)
+      return ((square.x === x && square.y === y) ? <div style={{ backgroundColor: "red", opacity: "0.5", width: "80%", height: "80%", position: "absolute", top: 0, left: 0, zIndex: 10 }}></div> : null)
     })
   }
 
@@ -53,7 +103,7 @@ export default function Board({ className, children }: any) {
   // NOTE 渲染 Grid
   const renderSqure = (i: number) => {
     const x = i % 9;   // 横坐标共9个点
-    const y = Math.floor(i / (10-1) ) // 纵坐标10个点
+    const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
     return (
       <BoardSquare x={x} y={y} className={className} key={i}>
         {renderPiece(x, y)}
@@ -69,7 +119,7 @@ export default function Board({ className, children }: any) {
     // console.log(x);
     // console.log(y);
     return chessPieceArray.map((piece: any, index: number) => {
-      
+
       // if (piece.x === x && piece.y === y) {
       //   console.log("渲染棋子：", piece.name);
       //   console.log("piece",piece);
@@ -80,7 +130,7 @@ export default function Board({ className, children }: any) {
 
 
       return (
-        (piece.x === x && piece.y === y) ? <ChessElem color={piece.color} x={piece.x} y={piece.y} /> : null  // piece.x 和 piece.y 传入后供棋子判断可如何走
+        (piece.x === x && piece.y === y) ? <ChessElem key={x + y} color={piece.color} x={piece.x} y={piece.y} /> : null  // piece.x 和 piece.y 传入后供棋子判断可如何走
       )
     }
 
@@ -104,7 +154,7 @@ export default function Board({ className, children }: any) {
       }}
     >
       {squares}
-      
+
     </Square>
   )
 
