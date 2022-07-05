@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from "../components/WelcomePage/Table";
+import Table from "../components/WelcomePage/Tables";
 import styled from 'styled-components';
 import { Link, useNavigate  } from "react-router-dom";
 // Styled Components
