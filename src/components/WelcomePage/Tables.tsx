@@ -17,9 +17,9 @@ export default function Table(props: any) {
 
   return (
     <>
-      <div> table {props.name} </div>
+      <div> table {props.tableNum} </div>
       <Seat>spot 1</Seat>
-      <img src={circleTable} alt="circleTable" />
+      <img src={circleTable} alt="circleTable" style={{maxWidth:"100px"}}/>
       <Seat>spot 2</Seat>
     </>
 
