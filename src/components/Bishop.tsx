@@ -13,6 +13,8 @@ import { ItemTypes } from "../constants/ItemTypes"
  */
 export default function Bishop(props:any) {
 
+    const name = "Bishop";
+
     useEffect(() =>{
         console.log(props.x);
         console.log(props.y);
@@ -24,7 +26,6 @@ export default function Bishop(props:any) {
         selectedPiece, setSelectedPiece,
         hasPiece
     } = useBoardContext();
-
 
 
     // 需要 color, name
@@ -50,9 +51,15 @@ export default function Bishop(props:any) {
         if (isDragging) {
             // console.log("Dragging: " + name);
 
-            for (let i = 0; i < 90; i++) {
+            for (let i = 0; i < 45; i++) {
                 const x = i % 9;   // 横坐标共9个点
-                const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
+                
+                let y:number = -1;
+                if (color == "black"){
+                    y = Math.floor(i / (10 - 1)) // 纵坐标每边5个点
+                }else if (color == "red"){
+                    y = 5 + Math.floor(i / (10 - 1)) // 纵坐标每边5个点
+                }
 
                 // 坐标减去棋子位置
                 const dx = x - props.x;
@@ -68,20 +75,20 @@ export default function Bishop(props:any) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
-                    else if (dx > 0 && dy > 0) { // 右侧
+                    if (dx > 0 && dy > 0) { // 右侧
                         if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y + 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
 
-                    // 考虑上下有拌马脚的棋子
+                    // 考虑上下有拌脚的棋子
                     if (dx < 0 && dy < 0) {      // 上方
                         if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x - 1, props.y - 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
-                    else if (dx > 0 && dy < 0) { // 下方
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y - 1)) {
+                    if (dx > 0 && dy < 0) { // 下方
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y - 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
@@ -107,6 +114,10 @@ export default function Bishop(props:any) {
 
     // 仅仅渲染棋子
     return (
-        color === "red" ? <img src={redXiang} alt="红象"/> :<img src={blackXiang} alt="黑象"/> 
+        <>
+            {/* <DragPreviewImage connect={preview} src={redMa} /> */}
+            <img ref={drag} src={color === "red" ? redXiang : blackXiang} alt="相" />
+
+        </> 
     )
 }

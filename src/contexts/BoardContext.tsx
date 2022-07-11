@@ -70,6 +70,30 @@ export function BoardContextProvider({ children }: any) {
             y: 9
         },
         {
+            name: "Bishop",
+            color: "black",
+            x: 2,
+            y: 0
+        },
+        {
+            name: "Bishop",
+            color: "black",
+            x: 6,
+            y: 0
+        },
+        {
+            name: "Bishop",
+            color: "red",
+            x: 2,
+            y: 9
+        },
+        {
+            name: "Bishop",
+            color: "red",
+            x: 6,
+            y: 9
+        },
+        {
             name: "Knight",
             color: "black",
             x: 1,

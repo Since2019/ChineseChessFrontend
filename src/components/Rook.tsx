@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import blackMa from "../assets/blackJu.png";
-import redMa from "../assets/redJu.png";
+import blackJu from "../assets/blackJu.png";
+import redJu from "../assets/redJu.png";
 
 import { useBoardContext } from "../contexts/BoardContext";
 
