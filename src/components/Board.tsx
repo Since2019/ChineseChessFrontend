@@ -5,6 +5,7 @@ import chess_board from "../assets/antontw_chinese_chess_plate.svg"
 
 import Knight from './Knight'
 import General from './General'
+import Bishop from './Bishop'
 
 import { io, Socket } from "socket.io-client";
 
@@ -30,7 +31,8 @@ const Square = styled.div`
 // NOTE 用于判断 使用什么来渲染的
 const chessPieceElementMap = new Map<string, any>([
   ["Knight", Knight],
-  ["General", General]
+  ["General", General],
+  ["Bishop", Bishop]
 ]
 );
 
