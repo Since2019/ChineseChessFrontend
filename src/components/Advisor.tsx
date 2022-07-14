@@ -8,10 +8,10 @@ import {
     useDrag
 } from "react-dnd";  // Handles Drag events
 
-export default function Guard(props: any) {
+export default function Advisor(props: any) {
 
     // NOTE 棋子名字不会变化
-    const name = "Guard";
+    const name = "Advisor";
 
     // NOTE 颜色和坐标由props传入
     const { color, x, y } = props;
