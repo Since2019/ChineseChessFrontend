@@ -118,6 +118,30 @@ export function BoardContextProvider({ children }: any) {
             x: 7,
             y: 9
         },
+        {
+            name: "Advisor",
+            color: "black",
+            x: 3,
+            y: 0
+        },
+        {
+            name: "Advisor",
+            color: "black",
+            x: 5,
+            y: 0
+        },
+        {
+            name: "Advisor",
+            color: "red",
+            x: 3,
+            y: 9
+        },
+        {
+            name: "Advisor",
+            color: "red",
+            x: 5,
+            y: 9
+        },
     ]);
 
 

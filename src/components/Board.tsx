@@ -6,6 +6,7 @@ import chess_board from "../assets/antontw_chinese_chess_plate.svg"
 import Knight from './Knight'
 import General from './General'
 import Bishop from './Bishop'
+import Advisor from './Advisor'
 
 import { io, Socket } from "socket.io-client";
 
@@ -32,7 +33,8 @@ const Square = styled.div`
 const chessPieceElementMap = new Map<string, any>([
   ["Knight", Knight],
   ["General", General],
-  ["Bishop", Bishop]
+  ["Bishop", Bishop],
+  ["Advisor", Advisor]
 ]
 );
 
