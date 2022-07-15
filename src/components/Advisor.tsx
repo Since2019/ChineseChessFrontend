@@ -48,7 +48,7 @@ export default function Advisor(props: any) {
             for (let i = 0; i < 27; i++) {
 
                 const x = i % 9;   // 横坐标共9个点
-                
+
                 let y: number = -1;
 
                 if (color === "black") {
@@ -60,7 +60,7 @@ export default function Advisor(props: any) {
                 // 坐标减去棋子位置
                 const dx = x - props.x;
                 const dy = y - props.y;
-                
+
                 try {
                     //左上
                     if (dx < 0 && dy > 0) {
@@ -69,28 +69,35 @@ export default function Advisor(props: any) {
                         }
                     }
                     //右上
-                    if (dx > 0 && dy > 0) { 
+                    if (dx > 0 && dy > 0) {
                         if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 3 || x === 4) && !hasPiece(props.x - 1, props.y + 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //左下
-                    if (dx < 0 && dy < 0) { 
+                    if (dx < 0 && dy < 0) {
                         if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 4 || x === 5) && !hasPiece(props.x - 1, props.y + 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //右下
-                    if (dx > 0 && dy < 0) { 
+                    if (dx > 0 && dy < 0) {
                         if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 3 || x === 4) && !hasPiece(props.x - 1, props.y + 1)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
 
+                    // TODO III. 在这里进行运算结果的总合
+                    setSelectedPiece({ name, color, x: props.x, y: props.y });
+
                 } catch (e) {
                     console.error("Caught exception: ", e);
                 }
             }
+        }
+        else {
+            // console.log("Stopped Dragging" + name);
+            setOverlayArray([])
         }
 
     }, [isDragging]);
