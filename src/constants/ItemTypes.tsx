@@ -3,5 +3,6 @@ export const ItemTypes = {
     GENERAL: "General",
     ROOK: "Rook",
     BISHOP: "Bishop",
+    ADVISOR: "Advisor",
   };
   
