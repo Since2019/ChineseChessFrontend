@@ -47,7 +47,7 @@ export default function Advisor(props: any) {
             // scanning the board for possible moves
             for (let i = 0; i < 27; i++) {
 
-                const x = i % 9;   // 横坐标共9个点
+                let x = i % 9;   // 横坐标共9个点
 
                 let y: number = -1;
 
@@ -63,26 +63,26 @@ export default function Advisor(props: any) {
 
                 try {
                     //左上
-                    if (dx < 0 && dy > 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 4 || x === 5) && !hasPiece(props.x - 1, props.y + 1)) {
+                    if (dx < 0 && dy < 0) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //右上
-                    if (dx > 0 && dy > 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 3 || x === 4) && !hasPiece(props.x - 1, props.y + 1)) {
+                    if (dx > 0 && dy < 0) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //左下
-                    if (dx < 0 && dy < 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 4 || x === 5) && !hasPiece(props.x - 1, props.y + 1)) {
+                    if (dx < 0 && dy > 0) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //右下
-                    if (dx > 0 && dy < 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (x === 3 || x === 4) && !hasPiece(props.x - 1, props.y + 1)) {
+                    if (dx > 0 && dy > 0) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
