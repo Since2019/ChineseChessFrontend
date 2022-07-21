@@ -41,8 +41,8 @@ export default function Advisor(props: any) {
 
     useEffect(() => {
         if (isDragging) {
-            // TODO: figure out the coordinates and the logic
-            console.log("Dragging" + name);
+            
+            //console.log("Dragging" + name);
 
             // scanning the board for possible moves
             for (let i = 0; i < 27; i++) {
@@ -64,25 +64,25 @@ export default function Advisor(props: any) {
                 try {
                     //左上
                     if (dx < 0 && dy < 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //右上
                     if (dx > 0 && dy < 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4 && !hasFriendlyPiece(x , y, color))) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //左下
                     if (dx < 0 && dy > 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 4 && props.x <= 5 && !hasFriendlyPiece(x , y, color))) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     //右下
                     if (dx > 0 && dy > 0) {
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 1 && (props.x >= 3 && props.x <= 4 && !hasFriendlyPiece(x , y, color))) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }

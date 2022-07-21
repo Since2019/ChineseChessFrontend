@@ -17,7 +17,7 @@ export default function Knight(props: any) {
     const {
         chessPieceArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        hasPiece
+        hasPiece, hasFriendlyPiece,
     } = useBoardContext();
 
     // NOTE 根据象棋的规则，棋子名字不会变化
@@ -75,24 +75,24 @@ export default function Knight(props: any) {
 
                     // 考虑左右有拌马脚的棋子
                     if (dx < 0) {      // 左侧
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 1 && !hasPiece(props.x - 1, props.y)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 1 && !hasPiece(props.x - 1, props.y) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     else if (dx > 0) { // 右侧
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 1 && !hasPiece(props.x + 1, props.y)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 1 && !hasPiece(props.x + 1, props.y) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
 
                     // 考虑上下有拌马脚的棋子
                     if (dy < 0) {      // 上方
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 2 && !hasPiece(props.x, props.y - 1)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 2 && !hasPiece(props.x, props.y - 1) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     else if (dy > 0) { // 下方
-                        if (Math.abs(dx) === 1 && Math.abs(dy) === 2 && !hasPiece(props.x, props.y + 1)) {
+                        if (Math.abs(dx) === 1 && Math.abs(dy) === 2 && !hasPiece(props.x, props.y + 1) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }

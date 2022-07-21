@@ -24,7 +24,7 @@ export default function Bishop(props:any) {
     const {
         chessPieceArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        hasPiece
+        hasPiece, hasFriendlyPiece,
     } = useBoardContext();
 
 
@@ -52,12 +52,12 @@ export default function Bishop(props:any) {
             // console.log("Dragging: " + name);
 
             for (let i = 0; i < 45; i++) {
-                const x = i % 9;   // 横坐标共9个点
+                let x = i % 9;   // 横坐标共9个点
                 
                 let y:number = -1;
-                if (color == "black"){
+                if (color === "black"){
                     y = Math.floor(i / (10 - 1)) // 纵坐标每边5个点
-                }else if (color == "red"){
+                }else if (color === "red"){
                     y = 5 + Math.floor(i / (10 - 1)) // 纵坐标每边5个点
                 }
 
@@ -71,24 +71,24 @@ export default function Bishop(props:any) {
 
                     
                     if (dx < 0 && dy > 0) {      // 左上侧
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x - 1, props.y + 1)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x - 1, props.y + 1) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     if (dx > 0 && dy > 0) { // 右侧
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y + 1)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y + 1 && !hasFriendlyPiece(x , y, color))) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
 
                     // 考虑上下有拌脚的棋子
                     if (dx < 0 && dy < 0) {      // 上方
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x - 1, props.y - 1)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x - 1, props.y - 1) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
                     if (dx > 0 && dy < 0) { // 下方
-                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y - 1)) {
+                        if (Math.abs(dx) === 2 && Math.abs(dy) === 2 && !hasPiece(props.x + 1, props.y - 1) && !hasFriendlyPiece(x , y, color)) {
                             setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         }
                     }
