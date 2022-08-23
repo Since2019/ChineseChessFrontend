@@ -16,7 +16,7 @@ export default function Rook(props: any) {
     const {
         chessPieceArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        hasPiece
+        hasPiece, hasFriendlyPiece,
     } = useBoardContext();
 
     // NOTE 根据象棋的规则，棋子名字不会变化
@@ -71,12 +71,12 @@ export default function Rook(props: any) {
                 try {
 
                     
-                    if (Math.abs(dx) === 0) {
+                    if (Math.abs(dx) === 0 && !hasFriendlyPiece(x , y, color)){
                         setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                     }
 
                     //
-                    if (Math.abs(dy) === 0) {
+                    if (Math.abs(dy) === 0 && !hasFriendlyPiece(x , y, color)) {
                         setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                     }
 

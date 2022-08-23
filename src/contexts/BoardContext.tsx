@@ -142,6 +142,30 @@ export function BoardContextProvider({ children }: any) {
             x: 5,
             y: 9
         },
+        {
+            name: "Rook",
+            color: "red",
+            x: 0,
+            y: 9
+        },
+        {
+            name: "Rook",
+            color: "red",
+            x: 8,
+            y: 9
+        },
+        {
+            name: "Rook",
+            color: "black",
+            x: 0,
+            y: 0
+        },
+        {
+            name: "Rook",
+            color: "black",
+            x: 8,
+            y: 0
+        },
     ]);
 
 
