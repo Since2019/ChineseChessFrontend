@@ -7,6 +7,7 @@ import Knight from './Knight'
 import General from './General'
 import Bishop from './Bishop'
 import Advisor from './Advisor'
+import Rook from './Rook'
 
 import { io, Socket } from "socket.io-client";
 
@@ -34,7 +35,8 @@ const chessPieceElementMap = new Map<string, any>([
   ["Knight", Knight],
   ["General", General],
   ["Bishop", Bishop],
-  ["Advisor", Advisor]
+  ["Advisor", Advisor],
+  ["Rook", Rook]
 ]
 );
 

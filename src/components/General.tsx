@@ -59,29 +59,31 @@ export default function General(props: any) {
                         const y = j;
 
                         // 坐标减去棋子位置
+                        // x在此处代表当前正在检查的坐标的横坐标, y在此处是正在检查的纵坐标
+                        // props.x和props.y是棋子的位置
                         const dx = x - props.x;
                         const dy = y - props.y;
 
                         // TODO II. 在这里传入 condition
                         try {
                             if (dx < 0) { // 左侧
-                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(props.x - 1, y, color)) {
+                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
                             else if (dx > 0) {// 右侧
-                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(props.x + 1, y, color)) {
+                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
 
                             if (dy < 0) { // 上方
-                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, props.y - 1, color)) {
+                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
                             else if (dy > 0) {// 下方
-                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, props.y + 1, color)) {
+                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                                 // TODO 飞将逻辑
@@ -107,24 +109,24 @@ export default function General(props: any) {
                         // TODO II. 在这里传入 condition
                         try {
                             if (dx < 0) { // 左侧
-                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(props.x - 1, y, color)) {
+                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
                             else if (dx > 0) {// 右侧
-                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(props.x + 1, y, color)) {
+                                if (Math.abs(dx) === 1 && Math.abs(dy) === 0 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
 
                             if (dy < 0) { // 上方
-                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(props.x, y - 1, color)) {
+                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, y, color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
 
                             }
                             else if (dy > 0) {// 下方
-                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(props.x , y + 1 , color)) {
+                                if (Math.abs(dx) === 0 && Math.abs(dy) === 1 && !hasFriendlyPiece(x, y , color)) {
                                     setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                                 }
                             }
