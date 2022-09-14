@@ -59,6 +59,8 @@ export default function General(props: any) {
                         const y = j;
 
                         // 坐标减去棋子位置
+                        // x在此处代表当前正在检查的坐标的横坐标, y在此处是正在检查的纵坐标
+                        // props.x和props.y是棋子的位置
                         const dx = x - props.x;
                         const dy = y - props.y;
 
