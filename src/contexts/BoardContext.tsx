@@ -144,6 +144,7 @@ export function BoardContextProvider({ children }: any) {
         },
         {
             name: "Rook",
+
             color: "red",
             x: 0,
             y: 9
@@ -165,6 +166,7 @@ export function BoardContextProvider({ children }: any) {
             color: "black",
             x: 8,
             y: 0
+
         },
     ]);
 
