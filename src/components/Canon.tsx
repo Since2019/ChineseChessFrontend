@@ -16,7 +16,7 @@ export default function Rook(props: any) {
     const {
         chessPieceArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        hasPiece
+        hasPiece, hasFriendlyPiece,
     } = useBoardContext();
 
     // NOTE 根据象棋的规则，棋子名字不会变化
@@ -57,7 +57,6 @@ export default function Rook(props: any) {
 
         if (isDragging) {
             // console.log("Dragging: " + name);
-
             for (let i = 0; i < 90; i++) {
                 const x = i % 9;   // 横坐标共9个点
                 const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
@@ -69,18 +68,57 @@ export default function Rook(props: any) {
 
                 // TODO II. 在这里传入 condition
                 try {
-
+                    let has_screen_up:boolean = true;
+                    let has_screen_right:boolean = false;
+                    let has_screen_down:boolean = false;
+                    let has_screen_left:boolean = true;
                     
-                    if (Math.abs(dx) === 0) {
-                        if (hasPiece(x, props.y-1)){
-                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                        }
+                    //TODO 向下扫描
+                    if (Math.abs(dx) === 0 && Math.abs(dy) > 0) {
+                        
+                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                         
                     }
 
-                    //
-                    if (Math.abs(dy) === 0) {
-                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                    //TODO 向右扫描
+                    if (Math.abs(dy) === 0 && Math.abs(dx) > 0) {
+                        while (has_screen_right === false)
+                        {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }])
+                        }
+
+                        if (hasPiece(props.x, y)){
+                            has_screen_right = true;
+                        }
+                        if (has_screen_right){
+                            if (hasPiece(props.x, y) && !hasFriendlyPiece(props.x, y, color))
+                            {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                        }
+                    }
+                    
+                    //TODO 向左扫描
+                    if (Math.abs(dy) === 0 && Math.abs(dx) < 0) {
+                        if (has_screen_left){
+                            if (hasPiece(props.x, y) && !hasFriendlyPiece(props.x, y, color))
+                            {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                        }
+
+                        if (hasPiece(props.x, y)){
+                            has_screen_left = false;
+                        }
+
+                        while (has_screen_left === false)
+                        {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }])
+                        }
+                    }
+                    //TODO向上扫描 
+                    if (Math.abs(dx) === 0 && Math.abs(dy) < 0){
+
                     }
 
 
