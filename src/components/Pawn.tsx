@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
+// 棋子图片
 import blackZu from "../assets/blackZu.png";
 import redBing from "../assets/redBing.png";
 
+// 拖拽组件
 import { useBoardContext } from "../contexts/BoardContext";
-
 import { DragPreviewImage, useDrag } from "react-dnd";  // Handles Drag events
-
 import { ItemTypes } from "../constants/ItemTypes"
 
+// 
+import { BOUNDARY_RIVER_Y_COOR_UPPER, BOUNDARY_RIVER_Y_COOR_LOWER } from "../constants/BoardConstants"
+import {
+    MIN_Y,
+    MAX_Y
+} from "../constants/BoardConstants";
 
 // NOTE: "props" 是由parent component传入，其中会包括color之类
 // TODO: 将 "props" 改成 {color,x,y} 这样的 destructured 格式
@@ -25,11 +31,6 @@ export default function Pawn(props: any) {
 
     // 
     const [color, setColor] = useState(props.color);
-
-    // useEffect(() => {
-    //     console.log("Knight props.color", props.color);
-    // }, [props]);
-
 
     /**  
      * NOTE: useDrag() Hook 
@@ -63,7 +64,7 @@ export default function Pawn(props: any) {
                 const x = i % 9;   // 横坐标共9个点
                 const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
 
-                // 坐标减去棋子位置
+                // 当前遍历到的横纵坐标减去棋子位置
                 const dx = x - props.x;
                 const dy = y - props.y;
 
@@ -71,21 +72,50 @@ export default function Pawn(props: any) {
                 // TODO II. 在这里传入 condition
                 try {
 
-                    // TODO : (1) 兵永不能退后
-                    if(color === "black"){
-                        // TODO : (2) 兵在己方河界不得左右移动
-                        // if(){
+                    if (color === "black") {
+                        // (1) 兵在己方河界不得左右移动
+                        if ( props.y >= MIN_Y && props.y <= BOUNDARY_RIVER_Y_COOR_UPPER ) {
+                            // (2) 兵永不能退后, 每次只能移动一格
+                            if (dx === 0 && dy === 1) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
 
-                        // }
+                        }
+                        // (3) 兵在对方河界可以左右移动
+                        else if (props.y > BOUNDARY_RIVER_Y_COOR_UPPER &&   props.y  <= MAX_Y) {
+                            // (2) 兵永不能退后, 每次只能移动一格
+                            if (dx === 0 && dy === 1) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                            if (Math.abs(dx) == 1 && dy == 0) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                        }
+                    }
 
+                    else if (color === "red") {
+                        // (1) 兵在己方河界不得左右移动
+                        if (props.y >= BOUNDARY_RIVER_Y_COOR_LOWER && props.y <= MAX_Y) {
+                            // (2) 兵永不能退后, 每次只能移动一格
+                            if (dx === 0 && dy === -1) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+
+                        }
+                        // (3) 兵在对方河界可以左右移动
+                        else if (  props.y >= MIN_Y && props.y < BOUNDARY_RIVER_Y_COOR_LOWER) {
+                            // (2) 兵永不能退后, 每次只能移动一格
+                            if (dx === 0 && dy === -1) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                            if (Math.abs(dx) === 1 && dy === 0) {
+                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            }
+                        }
 
                     }
-                    else if (color === "red"){
-                        // TODO : (2) 兵在己方河界不得左右移动
 
-                    }
 
-                    
                     // TODO : (3) 兵每次只能移动一格
 
 
