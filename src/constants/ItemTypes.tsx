@@ -4,5 +4,6 @@ export const ItemTypes = {
     ROOK: "Rook",
     BISHOP: "Bishop",
     ADVISOR: "Advisor",
+    PAWN : "Pawn"
   };
   

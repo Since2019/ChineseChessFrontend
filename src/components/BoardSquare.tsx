@@ -48,7 +48,7 @@ export default function BoardSquare({ className, children, x, y }: any) {
 
   const [{ isOver, canDrop }, drop] = useDrop(
     {
-      accept: [ItemTypes.KNIGHT, ItemTypes.GENERAL, ItemTypes.BISHOP],
+      accept: [ItemTypes.KNIGHT, ItemTypes.GENERAL, ItemTypes.BISHOP, ItemTypes.ROOK],
       canDrop: (item: any, monitor: any): any => { // item 是 useDrag 里面的 item 
 
 
