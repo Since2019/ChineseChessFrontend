@@ -1,6 +1,5 @@
 # Getting Started
 
-
 - Install Node.js LTS from here <https://nodejs.org/en/>
 
 - Install `TODO Tree` Extension and then add `NOTE` to the settings

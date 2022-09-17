@@ -168,6 +168,67 @@ export function BoardContextProvider({ children }: any) {
             y: 0
 
         },
+
+        {
+            name : "Pawn",
+            color : "black",
+            x : 0, 
+            y : 3
+        },
+        {
+            name : "Pawn",
+            color : "black",
+            x : 2, 
+            y : 3
+        },
+        {
+            name : "Pawn",
+            color : "black",
+            x : 4, 
+            y : 3
+        },
+        {
+            name : "Pawn",
+            color : "black",
+            x : 6, 
+            y : 3
+        },
+        {
+            name : "Pawn",
+            color : "black",
+            x : 8, 
+            y : 3
+        },
+        {
+            name : "Pawn",
+            color : "red",
+            x : 0, 
+            y : 6
+        },
+        {
+            name : "Pawn",
+            color : "red",
+            x : 2, 
+            y : 6
+        },
+        {
+            name : "Pawn",
+            color : "red",
+            x : 4, 
+            y : 6
+        },
+        {
+            name : "Pawn",
+            color : "red",
+            x : 6, 
+            y : 6
+        },
+        {
+            name : "Pawn",
+            color : "red",
+            x : 8, 
+            y : 6
+        }
     ]);
 
 
