@@ -8,9 +8,19 @@ import { DragPreviewImage, useDrag } from "react-dnd";  // Handles Drag events
 
 import { ItemTypes } from "../constants/ItemTypes"
 
+
+import {
+    MIN_X,
+    MAX_X,
+    MIN_Y,
+    MAX_Y,
+} from "../constants/BoardConstants";
+
+
+
 // NOTE: "props" 是由parent component传入，其中会包括color之类
 // TODO: 将 "props" 改成 {color,x,y} 这样的 destructured 格式
-export default function Rook(props: any) {
+export default function Canon(props: any) {
 
     // NOTE 从 Global Context中提取所需的function
     const {
@@ -24,11 +34,6 @@ export default function Rook(props: any) {
 
     // 
     const [color, setColor] = useState(props.color);
-
-    // useEffect(() => {
-    //     console.log("Knight props.color", props.color);
-    // }, [props]);
-
 
     /**  
      * NOTE: useDrag() Hook 
@@ -49,92 +54,151 @@ export default function Rook(props: any) {
     // NOTE: 棋子移动时的逻辑在此
     //       用这个作为切入点，改变context.
 
-    // TODO: 或许可以把for loop写成一个接收if condition array的Function,
-    //       在 II 的位置进行处理
-    //       在 III 的位置进行汇总
-    //       Condition 的格式： (Math.abs(dx) === 1 && Math.abs(dy) === 2)
     useEffect(() => {
-
         if (isDragging) {
-            // console.log("Dragging: " + name);
-            for (let i = 0; i < 90; i++) {
-                const x = i % 9;   // 横坐标共9个点
-                const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
 
-                // 坐标减去棋子位置
-                const dx = x - props.x;
-                const dy = y - props.y;
+            setSelectedPiece({ name, color, x: props.x, y: props.y });
 
+            let has_screen_up: boolean = false;
+            let has_screen_down: boolean = false;
+            let has_screen_left: boolean = false;
+            let has_screen_right: boolean = false;
 
-                // TODO II. 在这里传入 condition
-                try {
-                    let has_screen_up:boolean = true;
-                    let has_screen_right:boolean = false;
-                    let has_screen_down:boolean = false;
-                    let has_screen_left:boolean = true;
-                    
-                    //TODO 向下扫描
-                    if (Math.abs(dx) === 0 && Math.abs(dy) > 0) {
-                        
-                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                        
-                    }
-
-                    //TODO 向右扫描
-                    if (Math.abs(dy) === 0 && Math.abs(dx) > 0) {
-                        while (has_screen_right === false)
-                        {
-                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }])
-                        }
-
-                        if (hasPiece(props.x, y)){
-                            has_screen_right = true;
-                        }
-                        if (has_screen_right){
-                            if (hasPiece(props.x, y) && !hasFriendlyPiece(props.x, y, color))
-                            {
-                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                            }
-                        }
-                    }
-                    
-                    //TODO 向左扫描
-                    if (Math.abs(dy) === 0 && Math.abs(dx) < 0) {
-                        if (has_screen_left){
-                            if (hasPiece(props.x, y) && !hasFriendlyPiece(props.x, y, color))
-                            {
-                                setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                            }
-                        }
-
-                        if (hasPiece(props.x, y)){
-                            has_screen_left = false;
-                        }
-
-                        while (has_screen_left === false)
-                        {
-                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }])
-                        }
-                    }
-                    //TODO向上扫描 
-                    if (Math.abs(dx) === 0 && Math.abs(dy) < 0){
-
-                    }
-
-
-                    // TODO III. 在这里进行运算结果的总合
-                    setSelectedPiece({ name, color, x: props.x, y: props.y });
-
-
+            // TODO: 上
+            for (let y = props.y - 1; y >= MIN_Y; y--) {
+                const x = props.x;
+                // TODO: 发现有炮台
+                if (hasPiece(x, y) && has_screen_up === false) {
+                    has_screen_up = true;
+                    continue;
                 }
-                catch (e) {
-                    console.error("caught exception e:", e);
+
+                // 如果有炮台
+                if (has_screen_up) {
+                    // 炮台的下一个遍历到的敌方棋子就会被加入
+                    if (hasPiece(x, y)) {
+                        // NOTE 敌方棋子
+                        if (!hasFriendlyPiece(x, y, color)) {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            has_screen_up = false;
+                            break;
+                        }
+                        // NOTE 己方棋子
+                        else {
+                            break;
+                        }
+
+
+                    }
+                }
+                // 无炮台, 该点无棋子, 继续遍历
+                else if (!hasPiece(x, y) && !has_screen_up) {
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+            }
+            // TODO：下
+            for (let y = props.y + 1; y <= MAX_Y; y++) {
+                const x = props.x;
+                // TODO: 发现有炮台
+                if (hasPiece(x, y) && has_screen_down === false) {
+                    has_screen_down = true;
+                    continue;
+                }
+
+                // 如果有炮台
+                if (has_screen_down) {
+                    // 炮台的下一个遍历到的敌方棋子就会被加入
+                    if (hasPiece(x, y)) {
+                        // NOTE 敌方棋子
+                        if (!hasFriendlyPiece(x, y, color)) {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            has_screen_down = false;
+                            break;
+                        }
+                        // NOTE 己方棋子
+                        else {
+                            break;
+                        }
+
+
+                    }
+                }
+                // 无炮台, 该点无棋子, 继续遍历
+                else if (!hasPiece(x, y) && !has_screen_down) {
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+            }
+            // TODO：左
+            for (let x = props.x - 1; x >= MIN_X; x--) {
+                const y = props.y;
+                // TODO: 发现有炮台
+                if (hasPiece(x, y) && has_screen_left === false) {
+                    has_screen_left = true;
+                    continue;
+                }
+
+                // 如果有炮台
+                if (has_screen_left) {
+                    // 炮台的下一个遍历到的敌方棋子就会被加入
+                    if (hasPiece(x, y)) {
+                        // NOTE 敌方棋子
+                        if (!hasFriendlyPiece(x, y, color)) {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            has_screen_left = false;
+                            break;
+                        }
+                        // NOTE 己方棋子
+                        else {
+                            break;
+                        }
+
+
+                    }
+                }
+                // 无炮台, 该点无棋子, 继续遍历
+                else if (!hasPiece(x, y) && !has_screen_left) {
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                 }
 
             }
+            // TODO: 右
+            for (let x = props.x + 1; x <= MAX_X; x++) {
+                const y = props.y;
+                // TODO: 发现有炮台
+                if (hasPiece(x, y) && has_screen_right === false) {
+                    has_screen_right = true;
+                    continue;
+                }
+
+                // 如果有炮台
+                if (has_screen_right) {
+                    // 炮台的下一个遍历到的敌方棋子就会被加入
+                    if (hasPiece(x, y)) {
+                        // NOTE 敌方棋子
+                        if (!hasFriendlyPiece(x, y, color)) {
+                            setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                            has_screen_right = false;
+                            break;
+                        }
+                        // NOTE 己方棋子
+                        else {
+                            break;
+                        }
+
+
+                    }
+                }
+                // 无炮台, 该点无棋子, 继续遍历
+                else if (!hasPiece(x, y) && !has_screen_right) {
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+            }
+
+
+
         }
         else {
-            // console.log("Stopped Dragging" + name);
+            // 停止拖曳, 清空Overlay
             setOverlayArray([])
         }
 
