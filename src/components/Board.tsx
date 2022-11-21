@@ -9,6 +9,7 @@ import Bishop from './Bishop'
 import Advisor from './Advisor'
 import Rook from './Rook'
 import Pawn from "./Pawn"
+import Canon from "./Canon"
 
 
 
@@ -40,7 +41,8 @@ const chessPieceElementMap = new Map<string, any>([
   ["Bishop", Bishop],
   ["Advisor", Advisor],
   ["Rook", Rook],
-  ["Pawn",Pawn]
+  ["Pawn",Pawn],
+  ["Canon",Canon]
 ]
 );
 

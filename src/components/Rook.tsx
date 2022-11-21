@@ -8,6 +8,13 @@ import { DragPreviewImage, useDrag } from "react-dnd";  // Handles Drag events
 
 import { ItemTypes } from "../constants/ItemTypes"
 
+import {
+    MIN_X,
+    MAX_X,
+    MIN_Y,
+    MAX_Y,
+} from "../constants/BoardConstants";
+
 // NOTE: "props" 是由parent component传入，其中会包括color之类
 // TODO: 将 "props" 改成 {color,x,y} 这样的 destructured 格式
 export default function Rook(props: any) {
@@ -16,7 +23,7 @@ export default function Rook(props: any) {
     const {
         chessPieceArray, setOverlayArray,
         selectedPiece, setSelectedPiece,
-        hasPiece
+        hasPiece, hasFriendlyPiece,
     } = useBoardContext();
 
     // NOTE 根据象棋的规则，棋子名字不会变化
@@ -56,41 +63,83 @@ export default function Rook(props: any) {
     useEffect(() => {
 
         if (isDragging) {
-            // console.log("Dragging: " + name);
-
-            for (let i = 0; i < 90; i++) {
-                const x = i % 9;   // 横坐标共9个点
-                const y = Math.floor(i / (10 - 1)) // 纵坐标10个点
-
-                // 坐标减去棋子位置
-                const dx = x - props.x;
-                const dy = y - props.y;
-
-
-                // TODO II. 在这里传入 condition
-                try {
-
-                    
-                    if (Math.abs(dx) === 0) {
-                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                    }
-
-                    //
-                    if (Math.abs(dy) === 0) {
-                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
-                    }
-
-
-                    // TODO III. 在这里进行运算结果的总合
-                    setSelectedPiece({ name, color, x: props.x, y: props.y });
-
-
+            
+            setSelectedPiece({ name, color, x: props.x, y: props.y });
+            
+            // TODO: 上
+            for (let y = props.y - 1; y >= MIN_Y; y--) {
+                const x = props.x;
+                
+                if (!hasPiece(x, y)){
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
                 }
-                catch (e) {
-                    console.error("caught exception e:", e);
+                else{
+                    if (hasFriendlyPiece(x, y, color)){
+                        break;
+                    }
+                    else{
+                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                        break;
+                    }
                 }
-
             }
+
+            // TODO: 下
+            for (let y = props.y + 1; y <= MAX_Y; y++) {
+                const x = props.x;
+                
+                if (!hasPiece(x, y)){
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+                else{
+                    if (hasFriendlyPiece(x, y, color)){
+                        break;
+                    }
+                    else{
+                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                        break;
+                    }
+                }
+            }
+            
+            // TODO: 左
+            for (let x = props.x - 1; x >= MIN_X; x--) {
+                const y = props.y;
+                
+                if (!hasPiece(x, y)){
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+                else{
+                    if (hasFriendlyPiece(x, y, color)){
+                        break;
+                    }
+                    else{
+                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                        break;
+                    }
+                }
+            }
+
+            // TODO: 右
+            for (let x = props.x + 1; x <= MAX_X; x++) {
+                const y = props.y;
+                
+                if (!hasPiece(x, y)){
+                    setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                }
+                else{
+                    if (hasFriendlyPiece(x, y, color)){
+                        break;
+                    }
+                    else{
+                        setOverlayArray((oldArray: any) => [...oldArray, { x, y }]);
+                        break;
+                    }
+                }
+            }
+
+
+            
         }
         else {
             // console.log("Stopped Dragging" + name);

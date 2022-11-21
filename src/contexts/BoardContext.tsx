@@ -53,10 +53,8 @@ export function useBoardContext() {
 export function BoardContextProvider({ children }: any) {
 
 
-
+    // 棋盘上的棋子位置
     const [chessPieceArray, setChessPieceArray] = useState([
-
-
         {
             name: "General",
             color: "black",
@@ -144,18 +142,7 @@ export function BoardContextProvider({ children }: any) {
         },
         {
             name: "Rook",
-            color: "black",
-            x: 0,
-            y: 0
-        },
-        {
-            name: "Rook",
-            color: "black",
-            x: 8,
-            y: 0
-        },
-        {
-            name: "Rook",
+
             color: "red",
             x: 0,
             y: 9
@@ -165,6 +152,19 @@ export function BoardContextProvider({ children }: any) {
             color: "red",
             x: 8,
             y: 9
+        },
+        {
+            name: "Rook",
+            color: "black",
+            x: 0,
+            y: 0
+        },
+        {
+            name: "Rook",
+            color: "black",
+            x: 8,
+            y: 0
+
         },
 
         {
@@ -226,7 +226,32 @@ export function BoardContextProvider({ children }: any) {
             color : "red",
             x : 8, 
             y : 6
-        }
+        },
+
+        {
+            name : "Canon",
+            color : "black",
+            x : 1, 
+            y : 2
+        },
+        {
+            name : "Canon",
+            color : "black",
+            x : 7, 
+            y : 2
+        },
+        {
+            name : "Canon",
+            color : "red",
+            x : 1, 
+            y : 7
+        },
+        {
+            name : "Canon",
+            color : "red",
+            x : 7, 
+            y : 7
+        },
     ]);
 
 
