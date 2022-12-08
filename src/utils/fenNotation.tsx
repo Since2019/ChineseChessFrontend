@@ -47,11 +47,9 @@ export function chessPieceArray2FenString(chessPieceArray: Array<any>): string {
                 note = filtered[0].name[0].toLowerCase();
             }
 
-            if (fen_string.length !== 0) {
-                fen_string.push('/');
+            if (count !== 0){
+                fen_string.push(count);
             }
-            fen_string.push(count);
-            fen_string.push('/');
             fen_string.push(note);
             count = 0;
         }
@@ -61,12 +59,12 @@ export function chessPieceArray2FenString(chessPieceArray: Array<any>): string {
 
         // 行尾加上空格数
         if (x === 8) {
-            if (fen_string.length !== 0) {
-                fen_string.push('/');
-            }
             if (count !== 0) {
                 fen_string.push(count);
                 count = 0;
+            }
+            if (fen_string.length !== 0) {
+                fen_string.push('/'); //finally, add / to the end of a row
             }
         }
 
