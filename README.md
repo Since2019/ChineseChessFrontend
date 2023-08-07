@@ -1,3 +1,10 @@
+# Refactor Reasons
+[Restructure.md](Restructure.md)
+
+# Reference Documents
+[REFERENCE.md](REFERENCE.md)
+
+
 # Getting Started
 
 - Install Node.js LTS from here <https://nodejs.org/en/>
