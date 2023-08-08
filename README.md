@@ -1,3 +1,6 @@
+# Old Repo 
+[https://github.com/Since2019/html5-chess](https://github.com/Since2019/html5-chess)
+
 # Refactor Reasons
 [Restructure.md](Restructure.md)
 
